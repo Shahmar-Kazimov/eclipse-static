@@ -40,6 +40,7 @@ const slides = [
 
 const homepage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,6 +52,27 @@ const homepage = () => {
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
+  };
+
+  const toggleVisibility = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -163,9 +185,51 @@ const homepage = () => {
       <div className='mt-24 sm:w-[561px] md:w-[761px] lg:w-[961px] xl:w-[1271px] mx-auto'>
         <Products />
       </div>
-        <h2 className="text-3xl font-bold inline-block mb-10">What Our Clients Say</h2>
-      <div className='mb-24 bg-[#F6F2EE] rounded-lg p-5 py-12 w mx-auto'>
+      <h2 className="text-3xl font-bold inline-block mb-10">What Our Clients Say</h2>
+      <div className='bg-[#F6F2EE] rounded-lg p-5 py-12 w mx-auto'>
         <Reviews />
+      </div>
+      <section>
+        <div className="my-24 sm:w-[561px] md:w-[761px] lg:w-[961px] xl:w-[1271px] mx-auto">
+          <h2 className="text-2xl font-bold inline-block mb-10 sm:text-3xl">Important Facts & Figures</h2>
+          <div className="grid grid-cols-1 gap-8 px-4 sm:grid-cols-2 md:grid-cols-3 sm:px-5">
+            <div className="flex flex-col items-center justify-center gap-2">
+              <h2 className="text-3xl font-semibold sm:text-4xl md:text-5xl">20</h2>
+              <p className="text-[14px] text-center sm:text-[16px]">years as the leading marketplace for watches</p>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <h2 className="text-3xl font-semibold sm:text-4xl md:text-5xl">44,000</h2>
+              <p className="text-[14px] text-center sm:text-[16px]">trustworthy sellers from over 120 countries</p>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <h2 className="text-3xl font-semibold sm:text-4xl md:text-5xl">200,000</h2>
+              <p className="text-[14px] text-center sm:text-[16px]">customers choose Buyer Protection annually</p>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <h2 className="text-3xl font-semibold sm:text-4xl md:text-5xl">9,000,000</h2>
+              <p className="text-[14px] text-center sm:text-[16px]">website visitors monthly</p>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <h2 className="text-3xl font-semibold sm:text-4xl md:text-5xl">600,000</h2>
+              <p className="text-[14px] text-center sm:text-[16px]">listings covering a wide range</p>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <h2 className="text-3xl font-semibold sm:text-4xl md:text-5xl">6,550,000</h2>
+              <p className="text-[14px] text-center sm:text-[16px]">satisfied app users</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="fixed bottom-4 right-4">
+        {isVisible && (
+          <button
+            onClick={scrollToTop}
+            className="bg-[#C4932C] font-bold text-white px-3 py-[7px] rounded-full shadow-xl hover:bg-[#a07822] transition duration-300"
+          >
+            ⇱
+          </button>
+        )}
       </div>
     </div>
   );
